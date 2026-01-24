@@ -1,0 +1,124 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO -->
+    <title>Catálogo - Restaurante Plateados</title>
+    <meta name="description" content="Catálogo de platos y menús del Restaurante Plateados">
+    <meta name="author" content="Restaurante Plateados">
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="{% static 'core/css/Style.css' %}">
+</head>
+<body>
+    <!-- Encabezado y navegación (coincide con CSS) -->
+    <header class="encabezado">
+        <div class="contenedor">
+            <div class="logo">Restaurante <span>Plateados</span></div>
+            <nav class="navegacion">
+                <a href="{% url 'inicio' %}">Inicio</a>
+                <a href="{% url 'catalogo' %}">Catálogo</a>
+                <a href="{% url 'login' %}">Login</a>
+                <a href="{% url 'registro' %}">Registro</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="contenedor">
+        <!-- Sección de Catálogo de Comidas -->
+        <main>
+            <section id="catalogo" class="seccion">
+                <h2 class="titulo-seccion">Nuestro Catálogo de Comidas</h2>
+                <p>Explora nuestra selección de platos preparados con amor y dedicación.</p>
+                
+                <div class="catalogo">
+                    <!-- Plato 1 -->
+                    <div class="tarjeta-plato">
+                        <div class="imagen-plato-catalogo">
+                            <img src="{% static 'core/img/platos/Lasaña Casera.jpeg' %}" alt="imagen de una Lasaña Casera">
+                        </div>
+                        <div class="info-plato">
+                            <h3>Lasaña Casera</h3>
+                            <p>Deliciosa lasaña de carne con salsa bechamel y queso gratinado.</p>
+                            <div class="precio">$12.50</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Plato 2 -->
+                    <div class="tarjeta-plato">
+                        <div class="imagen-plato-catalogo">
+                            <img src="{% static 'core/img/platos/Parrillada Mixta.jpeg' %}" alt="imagen de una Parrillada Mixta">
+                        </div>
+                        <div class="info-plato">
+                            <h3>Parrillada Mixta</h3>
+                            <p>Selección de carnes a la parrilla con guarniciones de temporada.</p>
+                            <div class="precio">$18.75</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Plato 3 -->
+                    <div class="tarjeta-plato">
+                        <div class="imagen-plato-catalogo">
+                            <img src="{% static 'core/img/platos/Paella Valenciana.jpeg' %}" alt="imagen de una Paella Valenciana">
+                        </div>
+                        <div class="info-plato">
+                            <h3>Paella Valenciana</h3>
+                            <p>Auténtica paella con mariscos, pollo y verduras frescas.</p>
+                            <div class="precio">$16.90</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Plato 4 -->
+                    <div class="tarjeta-plato">
+                        <div class="imagen-plato-catalogo">
+                            <img src="{% static 'core/img/platos/Ensalada César.jpeg' %}" alt="imagen de una Ensalada César">
+                        </div>
+                        <div class="info-plato">
+                            <h3>Ensalada César</h3>
+                            <p>Fresca ensalada con pollo a la parrilla, crutones y aderezo especial.</p>
+                            <div class="precio">$9.80</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Plato 5 -->
+                    <div class="tarjeta-plato">
+                        <div class="imagen-plato-catalogo">
+                            <img src="{% static 'core/img/platos/Postre de Chocolate.jpeg' %}" alt="imagen de un Postre de Chocolate">
+                        </div>
+                        <div class="info-plato">
+                            <h3>Postre de Chocolate</h3>
+                            <p>Delicioso pastel de chocolate con salsa de frutos rojos.</p>
+                            <div class="precio">$6.50</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Plato 6  -->
+                    <div class="tarjeta-plato">
+                        <div class="imagen-plato-catalogo">
+                            <img src="{% static 'core/img/platos/Sopa del Día.jpeg' %}" alt="imagen de una Sopa del Día">
+                        </div>
+                        <div class="info-plato">
+                            <h3>Sopa del Día</h3>
+                            <p>Sopa casera preparada diariamente con ingredientes frescos.</p>
+                            <div class="precio">$7.25</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Pie de página -->
+    <footer class="pie-pagina">
+        <div class="contenedor">
+            <p>&copy; 2023 Restaurante Plateados. Todos los derechos reservados.</p>
+            <p>Dirección: Calle Principal #123, Ciudad</p>
+            <p>Teléfono: (123) 456-7890 | Email: info@restauranteplateados.com</p>
+        </div>
+    </footer>
+</body>
+</html>
