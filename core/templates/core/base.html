@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO -->
+    <title>{% block title %} Restaurante Plateados {% endblock %}</title>
+    <meta name="description" content="Restaurante Plateados - La mejor comida en un ambiente único">
+    <meta name="author" content="Restaurante Plateados">
+
+    <!-- Links a estilos -->
+    <link rel="stylesheet" href="{% static 'core/css/Style.css' %}">
+</head>
+<body>
+    
+    <!-- Encabezado y navegación (coincide con CSS) -->
+    <header class="encabezado">
+        <div class="contenedor">
+            <div class="logo">Restaurante <span>Plateados</span></div>
+            <nav class="navegacion">
+                <a href="{% url 'inicio' %}">Inicio</a>
+                <a href="{% url 'catalogo' %}">Catálogo</a>
+                <a href="{% url 'login' %}">Login</a>
+                <a href="{% url 'registro' %}">Registro</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        {% block content %}
+            {% endblock %}
+    </main>
+
+    <!-- Pie de página -->
+    <footer class="pie-pagina">
+        <div class="contenedor">
+            <p>&copy; 2023 Restaurante Plateados. Todos los derechos reservados.</p>
+            <p>Dirección: Calle Principal #123, Ciudad</p>
+            <p>Teléfono: (123) 456-7890 | Email: info@restauranteplateados.com</p>
+        </div>
+    </footer>
+
+
+</body>
+</html>
