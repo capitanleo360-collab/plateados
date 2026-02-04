@@ -78,14 +78,7 @@ WSGI_APPLICATION = 'plateados.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default' :{
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'restaurante_plateado',
-        'USER': 'root',
-        'PASSWORD': "",
-        'HOST': 'localhost',
-        'PORT': '3306',
-    }
+    'default' : dj_database_url.parse(config('DATABASE_URL'))
 }
 
 

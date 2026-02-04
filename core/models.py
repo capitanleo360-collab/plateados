@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.core.validators import FileExtensionValidator
 
 class User(AbstractUser):
     username = models.CharField(max_length=150, unique=True)
@@ -17,120 +18,87 @@ class User(AbstractUser):
         verbose_name = "Usuario"
         verbose_name_plural = "Usuarios"
 
-
     def __str__(self):
         return f"{self.username} ({self.email})"
-    
 
+class Category(models.Model):
+    name = models.CharField(verbose_name='Nombre', max_length= 100)
+    description = models.TextField(
+        verbose_name='Descripcion detallada',
+        max_length=400,
+        blank=True,
+        null= True
+    )
+    class Meta:
+        db_table = "categories"
+        verbose_name = "categoria"
+        verbose_name_plural = "categorias"
 
-class Cliente(models.Model):
-    nombre = models.CharField(max_length=100)
-    apellido = models.CharField(max_length=100)
-    telefono = models.CharField(unique=True, max_length=15, blank=True, null=True)
-    correo = models.CharField(unique=True, max_length=50)
+    def str(self):
+        return
+
+class Product(models.Model):
+    name = models.CharField(max_length=50)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    category = models.ForeignKey(Category, models.PROTECT)
+    imagen = models.ImageField(
+        verbose_name='imagen',
+        upload_to = 'core/Product/',
+        validators= [FileExtensionValidator(allowed_extensions=['jpg','jpeg','png','webp'])],
+        blank = True,
+        null = True
+    )
+    description = models.TextField(
+        verbose_name='Descripcion detallada',
+        max_length=400,
+        blank=True,
+        null= True
+    )
 
     class Meta:
-        managed = False
-        db_table = 'cliente'
-        verbose_name = "Cliente"
-        verbose_name_plural = "Clientes"
-
-    def __str__(self):
-        return f"{self.nombre} {self.apellido}"
-
-
-class Detallepedido(models.Model):
-    pk = models.CompositePrimaryKey('pedido_id', 'producto_id')
-    pedido = models.ForeignKey('Pedido', models.DO_NOTHING)
-    producto = models.ForeignKey('Producto', models.DO_NOTHING)
-    cantidad = models.IntegerField()
-    precio_unitario = models.DecimalField(max_digits=10, decimal_places=2)
-
-    class Meta:
-        managed = False
-        db_table = 'detallepedido'
-        verbose_name = "Detalle de Pedido"
-        verbose_name_plural = "Detalles de Pedidos"
-    
-    def __str__(self):
-        return f"Pedido ID: {self.pedido.id}, Producto: {self.producto.nombre}, Cantidad: {self.cantidad}"
-
-
-class Factura(models.Model):
-    fecha = models.DateField()
-    total = models.DecimalField(max_digits=10, decimal_places=2)
-    pedido = models.OneToOneField('Pedido', models.DO_NOTHING)
-
-    class Meta:
-        managed = False
-        db_table = 'factura'
-        vebose_name = "Factura"
-        verbose_name_plural = "Facturas"
-
-    def __str__(self):
-        return f"Factura ID: {self.id}, Total: {self.total}"
-
-
-class Mesa(models.Model):
-    capacidad = models.IntegerField()
-    ubicacion = models.CharField(max_length=20)
-    estado = models.IntegerField()
-    mesero = models.ForeignKey('Mesero', models.DO_NOTHING)
-
-    class Meta:
-        managed = False
-        db_table = 'mesa'
-        vebose_name = "Mesa"
-        verbose_name_plural = "Mesas"
-    
-    def __str__(self):
-        return f"Mesa ID: {self.id}, Ubicación: {self.ubicacion}, Capacidad: {self.capacidad}"
-
-
-class Mesero(models.Model):
-    nombre = models.CharField(max_length=100)
-    apellido = models.CharField(max_length=100)
-    puesto = models.CharField(max_length=20)
-    salario = models.DecimalField(max_digits=10, decimal_places=2)
-
-    class Meta:
-        managed = False
-        db_table = 'mesero'
-        vebose_name = "Mesero"
-        verbose_name_plural = "Meseros"
-    
-    def __str__(self):
-        return f"{self.nombre} {self.apellido}"
-
-
-class Pedido(models.Model):
-    fecha_hora = models.DateTimeField()
-    cliente = models.ForeignKey(Cliente, models.DO_NOTHING)
-    mesa = models.ForeignKey(Mesa, models.DO_NOTHING)
-
-    class Meta:
-        managed = False
-        db_table = 'pedido'
-        vebose_name = "Pedido"
-        verbose_name_plural = "Pedidos"
-    
-    def __str__(self):
-        return f"Pedido ID: {self.id}, Cliente: {self.cliente.nombre} {self.cliente.apellido}, Mesa ID: {self.mesa.id}"
-
-
-class Producto(models.Model):
-    nombre = models.CharField(max_length=50)
-    precio = models.DecimalField(max_digits=10, decimal_places=2)
-    categoria = models.CharField(max_length=50)
-
-    class Meta:
-        managed = False
-        db_table = 'producto'
+        db_table = 'products'
         verbose_name = "Producto"
         verbose_name_plural = "Productos"
 
     def __str__(self):
-        return f"{self.nombre} - ${self.precio}"
+        return f"{self.name} - ${self.price}"
+
+class Order(models.Model):
+
+    order_date = models.DateField()
+    order_time = models.TimeField() 
+    user = models.ForeignKey(User, models.PROTECT)
+    product = models.ForeignKey(Product, models.PROTECT)
+    total = models.DecimalField(decimal_places= 2, max_digits=10)
+    quantity = models.PositiveIntegerField(default=1)
+
+    def save(self, *args, **kwargs):
+        self.total = self.product.price * self.quantity
+        super().save(*args, **kwargs)    
+
+    class Meta:
+        db_table = 'orders'
+        verbose_name = "Pedido"
+        verbose_name_plural = "Pedidos"
+    
+    def __str__(self):
+        return f"Pedido ID: #{self.id}, Cliente: {self.user.first_name} {self.user.first_name}"
+
+class Bill(models.Model):
+    order = models.OneToOneField(Order, models.PROTECT)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    payment = models.BooleanField(default=False)
+    reference = models.CharField(max_length=16)
+    bank = models.CharField(max_length=20)
+
+    class Meta:
+        db_table = 'bills'
+        verbose_name = "Factura"
+        verbose_name_plural = "Facturas"
+
+    def __str__(self):
+        return f"Factura ID: {self.id}, Total: {self.order.total}"
 
 
 
