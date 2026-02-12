@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import FileExtensionValidator
+from decimal import Decimal
 
 class User(AbstractUser):
     username = models.CharField(max_length=150, unique=True)
@@ -63,6 +64,11 @@ class Product(models.Model):
     def __str__(self):
         return f"{self.name} - ${self.price}"
 
+    def delete(self,*args, **kwargs):
+        if self.imagen:
+            self.imagen.delete()
+        super().delete(*args, **kwargs)
+
 class Order(models.Model):
 
     order_date = models.DateField()
@@ -73,7 +79,7 @@ class Order(models.Model):
     quantity = models.PositiveIntegerField(default=1)
 
     def save(self, *args, **kwargs):
-        self.total = self.product.price * self.quantity
+        self.total = self.product.price * Decimal(self.quantity)
         super().save(*args, **kwargs)    
 
     class Meta:
@@ -99,7 +105,6 @@ class Bill(models.Model):
 
     def __str__(self):
         return f"Factura ID: {self.id}, Total: {self.order.total}"
-
 
 
 # Create your models here.

@@ -5,24 +5,41 @@
 <main>
         <section id="pedido" class="seccion">
             <h2 class="titulo-seccion">ingresa tus datos</h2>
-            <p>ingresa tus datos para realizar el pago.</p>
-                <img src="{% static 'core/img/platos/Lasaña Casera.jpeg' %}" alt="imagen de una Lasaña Casera">
+            {% if product.imagen %}
+                <img src="{{ product.imagen.url }}" alt="imagen de {{ product.name }}">
+
+            {% else %}
+            
+                <p> Image no disponible.</p>
+            
+            {% endif %}
+            
+            </div>
+            <div class="info-plato">
+                <h3>{{product.name}}</h3>
+            </div>
 
             <div class="formulario-contenedor">
-                <form action="#" method="post">
+                <form action="{% url 'pedido' id=product.id %}" method="post">
+                    {%  csrf_token  %}
+
                     <div class="grupo-formulario">
-                        <label for="cantidad">cantidad</label>
-                        <input type="number" id="correo" name="correo" required placeholder="ingresa tu cantidad">
+                        <label for="quantity">cantidad</label>
+                        <input type="quantity" id="quantity" name="quantity"placeholder="ingresa tu cantidad">
                     </div>
-                    <div class="grupo-formulario">
-                        <label for="contrasena">metodo de pago</label>
-                        <select name="" id="">
-                            <option value="">pago movil</option>
-                            <option value="">transferencia</option>
-                        </select>
-                        
-                    </div>
-                    <a href="{% url 'pedir' %}" type="submit" class="boton" style="width:100%; padding:12px;">Pedir</a>
+                    
+            <div class="formulario-contenedor">
+                <label for="order_date">fecha preferida</label>
+                <input type="date" id="order_date" name="order_date">
+            </div>
+
+            <div class="formulario-contenedor">
+                <label for="order_time">hora preferida</label>
+                <input type="time" id="order_time" name="order_time">
+            
+            </div>
+                    <button type="submit" class="boton" style="width:100%; padding:12px;">pedir</button>
+
                 </form>
             </div>
         </section>

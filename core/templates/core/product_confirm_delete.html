@@ -1,0 +1,17 @@
+{% extends "core/base.html" %}
+{% block title%}detalles- {{ block.super }}{% endblock %}
+{% load static %}
+{% block content %}
+
+<section>
+    <h1>¿estas seguro de que quieres eliminar "{{ product.name }}"?</h1>
+    <p>esta accion no se puede deshacer... no hay control + Z.</p>
+
+    <form method="post" action="{% url 'product_delete' id=product.id %}">
+        {% csrf_token %}
+        <button type="submit" class="button-delete">si, eliminar</button>
+        <a href="{% url 'product_detail' id=product.id %}">no, cancelar</a>
+    </form>
+</section>
+
+{% endblock content %}
