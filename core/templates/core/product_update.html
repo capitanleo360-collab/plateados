@@ -1,0 +1,61 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% block title%}Registro del producto - {{ block.super }}{% endblock %}
+{% block content %}
+    <main>
+        <section id="registro" class="seccion">
+            <h2 class="titulo-seccion">Crea un producto</h2>
+            <p>ingresa un producto.</p>
+            
+            <div class="formulario-contenedor">
+                <form action="{% url 'product_update' id=product.id %}" method="post" enctype="multipart/form-data">
+                    {%  csrf_token  %}
+
+                    <div class="grupo-formulario">
+                        <label for="nombre">Nombre del plato</label>
+                        <input type="text" id="nombre" name="name" required placeholder="Ej: arepa"value={{product.name}}>
+                    </div>
+
+
+                    <div class="grupo-formulario">
+                        <label for="correo">precio</label>
+                        <input type="number" id="precio" name="price" required placeholder="12.500" value="{{product.price|floatformat:2}}" required>
+                    </div>
+                    
+
+                    <label for="category">categoria</label>
+                        <select name="category" id="category">
+                            <option value=""> Seleccione una categoria </option>
+                            {% for category_obj in categories %}
+                                <option value="{{ category_obj.id }}" {% if product.category and category_obj.id == product.category.id %}
+                                selected{% endif %}>{{ category_obj.name }}<option>
+                            {% endfor %}
+                        </select>
+
+
+                        <div class="formulario-contenedor">
+                    <div class="grupo-formulario">
+                        <label for="nombre">description</label>
+                        <input type="text" id="descripcion" name="description" required placeholder="Ej: jamon y queso"value={{product.description}}>
+                    </div>
+
+                    <div class= "formulario-contenedor">
+                        {% if p.image %}
+                        <img src="{{ p.imagen.url}}" alt="Imagen actual" width="150">
+                        {% else %}
+                        <p> no hay imagen actual.</p>
+                        {% endif%}
+                        <label for="image" >subir imagen del producto</label>
+                        <input type="file" id="image" name="image" accept="image/*">
+                    </div>
+                    <button type="submit" class="boton" style="width:100%; padding:12px;">agregar</button>
+                </form>
+                <p>
+                    <a href= "{% url 'catalogo' %}">volver a la lista de productos </a>
+                </p>
+
+                </div>
+            </div>
+        </section>
+    </main>
+{% endblock content %}

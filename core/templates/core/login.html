@@ -1,0 +1,30 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% block title%}Login - {{ block.super }}{% endblock %}
+{% block content %}
+
+    <main>
+        <section id="login" class="seccion">
+            <h2 class="titulo-seccion">Iniciar Sesión</h2>
+            <p>Accede a tu cuenta para realizar pedidos y gestionar tus reservas.</p>
+            
+            <div class="formulario-contenedor">
+                <form action="#" method="post">
+                    <div class="grupo-formulario">
+                        <label for="correo">Correo Electrónico</label>
+                        <input type="email" id="correo" name="correo" required placeholder="tucorreo@ejemplo.com">
+                    </div>
+                    <div class="grupo-formulario">
+                        <label for="contrasena">Contraseña</label>
+                        <input type="password" id="contrasena" name="contrasena" required placeholder="Ingresa tu contraseña">
+                    </div>
+                    <button type="submit" class="boton" style="width:100%; padding:12px;">INICIAR SESIÓN</button>
+                </form>
+
+                <div class="enlace-formulario">
+                    <p>¿No tienes una cuenta? <a href="registro.html">Regístrate aquí</a></p>
+                </div>
+            </div>
+        </section>
+    </main>
+    {% endblock  %}

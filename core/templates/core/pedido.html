@@ -1,0 +1,47 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block content %}
+<main>
+        <section id="pedido" class="seccion">
+            <h2 class="titulo-seccion">ingresa tus datos</h2>
+            {% if product.imagen %}
+                <img src="{{ product.imagen.url }}" alt="imagen de {{ product.name }}">
+
+            {% else %}
+            
+                <p> Image no disponible.</p>
+            
+            {% endif %}
+            
+            </div>
+            <div class="info-plato">
+                <h3>{{product.name}}</h3>
+            </div>
+
+            <div class="formulario-contenedor">
+                <form action="{% url 'pedido' id=product.id %}" method="post">
+                    {%  csrf_token  %}
+
+                    <div class="grupo-formulario">
+                        <label for="quantity">cantidad</label>
+                        <input type="quantity" id="quantity" name="quantity"placeholder="ingresa tu cantidad">
+                    </div>
+                    
+            <div class="formulario-contenedor">
+                <label for="order_date">fecha preferida</label>
+                <input type="date" id="order_date" name="order_date">
+            </div>
+
+            <div class="formulario-contenedor">
+                <label for="order_time">hora preferida</label>
+                <input type="time" id="order_time" name="order_time">
+            
+            </div>
+                    <button type="submit" class="boton" style="width:100%; padding:12px;">pedir</button>
+
+                </form>
+            </div>
+        </section>
+    </main>
+{% endblock content %}

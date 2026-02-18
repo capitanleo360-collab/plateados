@@ -1,0 +1,33 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% block title%}Catálogo -{{ block.super }}{% endblock %}
+{% block content %}
+
+    <div class="contenedor">
+    <section id="catalogo" class="seccion">
+        <h2 class="titulo-seccion">Nuestro Catálogo de Comidas</h2>
+        <p>Explora nuestra selección de platos preparados con amor y dedicación.</p>
+            <p>
+                <a type="submit" class="boton" style="width:20%; padding:4px;"href="{% url 'registro_de_producto' %}">crear producto</a>
+            </p>
+        
+    {% if products %}
+        <div class="catalogo">
+            {% for p in products %}
+
+            
+
+            {% include "core/includes/card.html" %}
+
+            {% endfor %}
+        </div>
+
+    {% else %}
+    <p> no hay productos disponibles </p>
+        
+    {% endif %}
+
+    
+    </section>
+</div>
+{% endblock %}
