@@ -18,7 +18,7 @@
                 <p>{{p.description}}</p>
             </div>
             <div class="precio">
-                {{p.price}}
+                {{p.price}} cop
             </div>
             <a href="{% url 'pedido' id=p.id %}" type="submit" class="boton" style="width:35%; padding:4px;">Comprar</a>
             <a href="{% url 'product_update' id=p.id %}" type="submit" class="boton" style="width:35%; padding:4px;">actualizar</a>

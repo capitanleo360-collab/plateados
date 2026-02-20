@@ -2,6 +2,10 @@ from django.shortcuts import render, redirect
 from django.views import View
 from .models import *
 from django.shortcuts import render, redirect, get_object_or_404
+from django.core.paginator import Paginator
+from django.db.models import Q
+from django.contrib.auth import authenticate, login
+from .forms import LoginForm
 
 
 class ProductCreateView(View):
@@ -57,11 +61,31 @@ class ProductCreateView(View):
 
 class ProductListView(View):
     template_name = 'core/catalogo.html'
+    paginate_by = 3
 
     def get(self, request, *args, **kwargs):
+        query = request.GET.get('q')
         products = Product.objects.all()
-        return render(request, self.template_name,{'products': products})
 
+        if query:
+            products = products.filter(
+                Q(name__icontains=query) |
+                Q(description__icontains=query) |
+                Q(category__name__icontains=query)
+            ).distinct()
+
+        paginator = Paginator(products, self.paginate_by)
+
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+
+        contexxt = {
+            'page_obj': page_obj,
+            'products': page_obj.object_list,
+            'query': query,
+        }
+
+        return render(request, self.template_name, contexxt)
 
 
 class ProductDetailView(View):
@@ -126,10 +150,6 @@ class ProductDeleteview(View):
 def index(request):
     return render(request, 'core/index.html')
 
-
-def login(request):
-    return render(request, 'core/login.html')
-
 def registro(request):
     return render(request, 'core/registro.html')
 
@@ -173,3 +193,33 @@ class OrderCreateView(View):
 
 
         return redirect('pedir')
+    
+
+class UserLoginView(View):
+    template_name = 'core/login.html'
+
+    def get(self, request, *args, **kwargs):
+        form = LoginForm()
+        return render(request, self.template_name, {'form': form})
+    
+    def post(self, request, *args, **kwargs):
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+
+            user = authenticate(request, username=username, password=password)
+
+            if user is not None:
+                
+                login(request, user)
+                return redirect('inicio')
+            else:
+                return render(request, self.template_name, {
+                    'form': form,
+                    'error': 'Credenciales inválidas. Por favor, inténtalo de nuevo.'
+                })
+        return render(request, self.template_name, {'form': form})
+
+
+

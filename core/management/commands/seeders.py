@@ -10,12 +10,15 @@ class Command (BaseCommand):
     def seed_categories (self):
 
         categories = [
-            {'name':'desayuno', 'description':'nicolas maduro 3.4'},
-            {'name':'almuerzo', 'description':'diosdado sin cabello'}
+            {'name':'desayuno', 'description':'comidas de 7-10 am'},
+            {'name':'almuerzo', 'description':'11-1 pm'},
+            {'name':'postres', 'description':'3-5 pm'},
+            {'name':'cena', 'description':'6-9 pm'},
+
         ]
 
         for category in categories:
-            category, created = Category.objects.update_or_create(defaults=category,name=category['name'],description=category['description'])
+            category, created = Category.objects.get_or_create(defaults=category,name=category['name'],description=category['description'])
 
             if created:
                 self.stdout.write(self.style.SUCCESS(f'Categoria "{category.name}" creada.'))

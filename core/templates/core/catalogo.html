@@ -4,6 +4,13 @@
 {% block content %}
 
     <div class="contenedor">
+    <form method="get" action="{% url 'catalogo' %}">
+        <input type="text" name="q" placeholder="Buscar productos..."
+         value="{{ query|default_if_none:'' }}">
+        <button type="submit" class="boton">Buscar</button>
+
+    </form>
+
     <section id="catalogo" class="seccion">
         <h2 class="titulo-seccion">Nuestro Catálogo de Comidas</h2>
         <p>Explora nuestra selección de platos preparados con amor y dedicación.</p>
@@ -30,4 +37,25 @@
     
     </section>
 </div>
+
+
+<div class="paginacion">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">{{ page_obj.previous_page_number }}
+            {% if query %}&q={{ query }}{% endif %} anterior</a>
+        {% endif %}
+
+        <span class="current">
+            Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">
+            {% if query %}&q={{ query }}{% endif %}siguiente</a>
+        {% endif %}
+    </span>
+
+
+
 {% endblock %}
