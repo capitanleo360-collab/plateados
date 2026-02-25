@@ -5,26 +5,41 @@
 <main>
         <section id="pedido" class="seccion">
             <h2 class="titulo-seccion">ingresa tus datos</h2>
-            <p>ingresa tus datos para realizar el pago.</p>
             
             <div class="formulario-contenedor">
-                <form action="#" method="post">
+                    <p>    Para el pago por transferencia bancaria, por favor sigue estos pasos:</p>
+                    <ol>
+                        <li>Selecciona tu banco de origen en el menú desplegable.</li>
+                        <li>Realiza la transferencia a nuestra cuenta bancaria utilizando los siguientes datos:</li>
+                        <ul>
+                            <li><strong>Banco:</strong> Banco de Venezuela</li>
+                            <li><strong>Número de cuenta:</strong> 012054230025</li>
+                            <li><strong>Nombre del titular:</strong> Plateados C.A.</li>
+                        </ul>
+                        <li>Después de completar la transferencia, ingresa el número de referencia proporcionado por tu banco en el campo correspondiente.</li>
+                        <li>Haz clic en el botón "Pagar" para finalizar tu pedido.</li>
+                    </ol>
+                    <br>
+                <form action="{% url 'pedir' id=order.id %}" method="post">
+                    {%  csrf_token  %}
                     <div class="grupo-formulario">
-                        <label for="contrasena">datos</label>
-                <img src="{% static 'core/img/platos/Lasaña Casera.jpeg' %}" alt="imagen de una Lasaña Casera">
 
-                        <label for="contrasena">metodo de pago</label>
-                        <select name="" id="">
-                            <label for="contrasena">banco de origen</label>
-                            <option value="">venezuela</option>
-                            <option value="">banesco</option>
-                            <option value="">sofitasa</option>
-                            <option value="">provincial</option>
+                        <label for="datos">Ingresa tus datos para realizar el pago.</label>
+                        <label for="metodo_pago">metodo de pago</label>
+                        <select name="metodo_pago" id="metodo_pago">
+                            <label for="metodo_pago">banco de origen</label>
+                            <option value="venezuela">venezuela</option>
+                            <option value="banesco">banesco</option>
+                            <option value="sofitasa">sofitasa</option>
+                            <option value="provincial">provincial</option>
                         </select>
                     </div>
+                    <p>
+                    total a pagar: {{ order.total }} cop
+                    </p>
                     <div class="grupo-formulario">
-                        <label for="cantidad">numero de refenrencia</label>
-                        <input type="number" id="correo" name="correo" required placeholder="012054230025">
+                        <label for="reference">numero de referencia</label>
+                        <input type="number" id="reference" name="reference" required placeholder="012054230025">
                         
                     </div>
                     <button type="submit" class="boton" style="width:100%; padding:12px;">pagar</button>

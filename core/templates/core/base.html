@@ -22,8 +22,17 @@
             <nav class="navegacion">
                 <a href="{% url 'inicio' %}">Inicio</a>
                 <a href="{% url 'catalogo' %}">Catálogo</a>
-                <a href="{% url 'login' %}">Login</a>
-                <a href="{% url 'registro' %}">Registro</a>
+                <a href="{% url 'mis_compras' %}">Mis Compras</a>
+                {% if user.is_authenticated and user.is_staff %}
+                <a href="">Ver todas las compras</a>
+                {% endif %}
+
+                {% if user.is_authenticated %}
+                    <p>Bienvenido, {{ user.username }}!<a href="{% url 'logout' %}">Cerrar sesión</a></p>
+                    {% else %}
+                    <a href="{% url 'login' %}">Iniciar sesión</a>
+                    <a href="{% url 'registro' %}">Registrarse</a>
+                {% endif %}
                 
             </nav>
         </div>

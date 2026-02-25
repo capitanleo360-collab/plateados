@@ -39,15 +39,38 @@ body {
 }
 
 .navegacion {
+     display: flex;
+    flex-direction: row;
+    justify-content: center;
     float: right;
-    margin-top: 5px;
+    margin-top: 6px;
+}
+
+.input-busqueda {
+    display: flex;
+    justify-content: center;
+    padding: 6px;
+    border-radius: 3px;
+    margin-right: 30px;
+}
+
+.input-busqueda input, button {
+    padding: 6px;
+    margin: 10px;
+
+}
+
+.crear-producto {
+    display: flex;
+    justify-content: end;
+    margin-top: 20px;
 }
 
 .navegacion a {
     color: white;
     text-decoration: none;
     margin-left: 20px;
-    padding: 5px 10px;
+    padding: 0.20px 10px;
     border-radius: 3px;
 }
 

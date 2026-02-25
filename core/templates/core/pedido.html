@@ -4,7 +4,7 @@
 {% block content %}
 <main>
         <section id="pedido" class="seccion">
-            <h2 class="titulo-seccion">ingresa tus datos</h2>
+            <h2 class="titulo-seccion">Realiza tu pedido</h2>
             {% if product.imagen %}
                 <img src="{{ product.imagen.url }}" alt="imagen de {{ product.name }}">
 
@@ -30,7 +30,7 @@
                     
             <div class="formulario-contenedor">
                 <label for="order_date">fecha preferida</label>
-                <input type="date" id="order_date" name="order_date">
+                <input type="date" id="order_date" name="order_date" min="{{ today }}">
             </div>
 
             <div class="formulario-contenedor">

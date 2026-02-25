@@ -1,0 +1,32 @@
+{% load static %}
+
+    <!-- Plato 1 -->
+        <div class="tarjeta-plato">
+            <div class="imagen-plato-catalogo">
+            {% if o.product.imagen %}
+                <img src="{{ o.product.imagen.url }}" alt="imagen de {{ o.product.name }}">
+
+            {% else %}
+            
+                <p> Image no disponible.</p>
+            
+            {% endif %}
+            
+            </div>
+            <div class="info-plato">
+                <h3>{{o.product.name}}</h3>
+                <h3>{{o.quantity}} unidades</h3>
+
+            </div>
+            <div class="precio">
+                {{o.total}} cop
+            </div>
+
+            {% if not o.bill.payment %}
+                <a type="submit" class="boton" style="width:35%; padding:4px"; href="">Cancelar</a>
+                <a href="{% url 'pedir' id=o.id %}" type="submit" class="boton" style="width:35%; padding:4px;">Pagar</a>
+            {% else %}
+                <a>En camino</a>
+            <span style="font-size: 1.5em;">🚚</span>
+            {% endif %}
+        </div>
