@@ -3,15 +3,23 @@
 {% load static %}
 {% block content %}
 
+
 <section>
+{% if product.order_set.count > 0 %}
+    <h1>no puedes eliminar "{{ product.name }}"</h1>
+    <p>este producto tiene ordenes asociadas, por lo tanto no se puede eliminar
+    </p>
+    <a href="{% url 'catalogo' %}">volver al catalogo</a>
+{% else %}
     <h1>¿estas seguro de que quieres eliminar "{{ product.name }}"?</h1>
     <p>esta accion no se puede deshacer... no hay control + Z.</p>
 
     <form method="post" action="{% url 'product_delete' id=product.id %}">
         {% csrf_token %}
         <button type="submit" class="button-delete">si, eliminar</button>
-        <a href="{% url 'product_detail' id=product.id %}">no, cancelar</a>
+        <a href="{% url 'catalogo' %}">no, cancelar</a>
     </form>
+{% endif %}
 </section>
 
 {% endblock content %}

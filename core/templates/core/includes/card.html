@@ -24,9 +24,10 @@
             <a href="{% url 'product_update' id=p.id %}" type="submit" class="boton" style="width:35%; padding:4px;">actualizar</a>
             <a type="submit" class="boton" style="width:35%; padding:4px"; href="{% url 'product_delete' id=p.id %}">elminar</a>
             {% else %}
-            <a  href="{% url 'product_detail' id=p.id %}" type="submit" class="boton" style="width:35%; padding:4px">mostrar</a>
-            <a href="{% url 'pedido' id=p.id %}" type="submit" class="boton" style="width:35%; padding:4px;">Comprar</a>
+            <a  href="{% url 'product_detail' id=p.id %}" type="submit" class="boton" style="width:35%; padding:2px">mostrar</a>
+            <a href="{% url 'pedido' id=p.id %}" type="submit" class="boton" style="width:35%; padding:2px;">Comprar</a>
             {% endif %}
+            
 
 
             

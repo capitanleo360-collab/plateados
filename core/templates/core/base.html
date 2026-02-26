@@ -22,9 +22,11 @@
             <nav class="navegacion">
                 <a href="{% url 'inicio' %}">Inicio</a>
                 <a href="{% url 'catalogo' %}">Catálogo</a>
+                {% if user.is_authenticated and not user.is_staff %}
                 <a href="{% url 'mis_compras' %}">Mis Compras</a>
+                {% endif %}
                 {% if user.is_authenticated and user.is_staff %}
-                <a href="">Ver todas las compras</a>
+                <a href="{% url 'todas_las_compras' %}">Ver todas las compras</a>
                 {% endif %}
 
                 {% if user.is_authenticated %}

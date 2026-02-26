@@ -159,7 +159,7 @@ def index(request):
 # Create your views here.
 
 
-class OrderCreateView(View):
+class OrderCreateView(LoginRequiredMixin, View):
     template_name = 'core/pedido.html'
 
     def get(self, request, id,*args, **kwargs):
@@ -309,3 +309,46 @@ class UserLogoutView(View):
         logout(request)
         return redirect('login')
 
+class OrderDeleteView(View):
+    template_name = 'core/order_confirm_delete.html'
+
+    def get(self, request, id, *args, **kwargs):
+        order = get_object_or_404(Order, id=id)
+        return render(request, self.template_name, {'order': order})
+
+    
+    def post(self, request, id, *args, **kwargs):
+        order = get_object_or_404(Order, id=id)
+        order.bill.delete()
+        order.delete()
+
+        return redirect('inicio')
+    
+
+class AllOrdersListView(View):
+    template_name = 'core/todas_compras.html'
+    paginate_by = 3
+
+    def get(self, request, *args, **kwargs):
+        query = request.GET.get('q')
+        orders = Order.objects.all()
+        print(orders)
+        if query:
+            orders = orders.filter(
+                Q(product__name__icontains=query)|
+                Q(user__username__icontains=query)|
+                Q(total__icontains=query)
+            ).distinct()
+
+        paginator = Paginator(orders, self.paginate_by)
+
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+
+        context = {
+            'page_obj': page_obj,
+            'orders': page_obj.object_list,
+            'query': query,
+        }
+
+        return render(request, self.template_name, context)

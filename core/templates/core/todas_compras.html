@@ -1,0 +1,54 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% block title%}Compras -{{ block.super }}{% endblock %}
+{% block content %}
+
+    <div class="contenedor">
+    <form method="get" action="" class="input-busqueda">
+        <input type="text" name="q" placeholder="Buscar compras..."
+         value="{{ request.GET.q|default_if_none:'' }}">
+        <button type="submit" class="boton" style="width:10%; padding:5px;">Buscar</button>
+    </form>
+    
+
+
+    <section id="catalogo" class="seccion">
+        <h2 class="titulo-seccion">todas compras</h2>
+        
+    {% if orders %}
+        <div class="catalogo">
+            {% for o in orders %} 
+
+            {% include "core/includes/compra.html" %}
+
+            {% endfor %}
+        </div>
+
+    {% else %}
+    <p> no hay compras registradas </p>
+        
+    {% endif %}
+
+    
+    </section>
+</div>
+
+
+<div class="paginacion">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}" class="boton" style="width:10%; padding:2px;">Primera página</a>
+        {% endif %}
+
+        <span class="current">
+            Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}" class="boton" style="width:10%; padding:2px;">Siguiente</a>
+        {% endif %}
+    </span>
+
+
+
+{% endblock %}

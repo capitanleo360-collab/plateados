@@ -15,10 +15,24 @@
                         <label for="{{ form.username.id_for_label }}"> nombre de usuario:</label>
                         {{ form.username }}
                     </div>
+
+
+                    
                     <div class="grupo-formulario">
                         <label for="{{ form.password.id_for_label }}">Contraseña</label>
                         {{ form.password }}
-                    </div>
+                    </div> 
+
+                                {% if "usuario" in error|lower or "username" in error|lower %}
+
+                                    <p style="color: red;">El usuario no existe.</p>
+                                {% else %}
+                                    <p style="color: red;">{{ error }}</p>
+                                {% endif %}
+                        
+
+                            
+    
                     <button type="submit" class="boton" style="width:100%; padding:12px;">INICIAR SESIÓN</button>
                 </form>
 
