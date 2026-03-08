@@ -16,7 +16,7 @@ Plateados es una plataforma web para la gestión de pedidos y órdenes de un res
 
 ## 🛠️ Tecnologías Utilizadas
 El proyecto está construido utilizando un stack potente y escalable:
-1. **HTML5 & CSS:** Estructura y diseño responsive.
+1. **HTML5 & CSS:** Estructura y diseño.
 2. **Python 3.13:** Lenguaje de programación principal.
 3. **Django 6.0.1:** Framework web para la lógica de negocio y seguridad.
 4. **MySQL 2.2.7:** Base de datos robusta para el manejo de órdenes, menú y usuarios.
